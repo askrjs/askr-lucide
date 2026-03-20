@@ -32,10 +32,12 @@
     "./package.json": "./package.json"
   },
   "peerDependencies": {
-    "@askrjs/askr": ">=0.0.28 <1.0.0"
+    "@askrjs/askr": ">=0.0.28 <1.0.0",
+    "@askrjs/askr-ui": ">=1.0.0"
   },
   "devDependencies": {
     "@askrjs/askr": "file:../askr",
+    "@askrjs/askr-ui": "github:askrjs/askr-ui",
     "jsdom": "^29.0.0",
     "lucide": "latest",
     "typescript": "^5.9.0",

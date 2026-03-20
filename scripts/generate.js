@@ -22,7 +22,7 @@ export function indexEntry(name, kebab) {
 export function indexPreamble() {
   return [
     `// Generated - do not edit. Run \`npm run generate\` to update.`,
-    `export type { IconProps, IconNode } from './types';`,
+    `export type { IconProps, IconNode, IconSizeToken } from './types';`,
     `export { createIcon } from './create-icon';`,
     ``,
   ].join('\n');
