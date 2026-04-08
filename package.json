@@ -56,7 +56,7 @@
     "@askrjs/askr": "file:../askr",
     "jsdom": "^29.0.1",
     "lucide": "latest",
-    "typescript": "^6.0.2",
+    "typescript": "^5.0.0",
     "vite-plus": "latest"
   },
   "scripts": {
