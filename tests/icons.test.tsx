@@ -4,7 +4,7 @@
  * These tests use a hand-crafted fixture IconNode — they do NOT import from
  * any generated file (src/icons/ is gitignored and not checked in).
  */
-import { describe, it, expect, afterEach } from 'vitest';
+import { describe, it, expect, afterEach } from 'vite-plus/test';
 import { createIsland } from '@askrjs/askr';
 import { createIcon } from '../src/create-icon';
 import type { IconNode } from '../src/types';
@@ -42,19 +42,30 @@ describe('createIcon — rendered output', () => {
     expect(container.querySelector('svg path')).not.toBeNull();
   });
 
+  it('renders the svg tree in the SVG namespace', () => {
+    container = mount(<TestIcon />);
+    const svg = container.querySelector('svg');
+    const circle = container.querySelector('svg circle');
+    const path = container.querySelector('svg path');
+
+    expect(svg?.namespaceURI).toBe('http://www.w3.org/2000/svg');
+    expect(circle?.namespaceURI).toBe('http://www.w3.org/2000/svg');
+    expect(path?.namespaceURI).toBe('http://www.w3.org/2000/svg');
+  });
+
   it('applies default size of 20', () => {
     container = mount(<TestIcon />);
     const svg = container.querySelector('svg')!;
-    expect(svg.getAttribute('width')).toBe('var(--ak-icon-size)');
-    expect(svg.getAttribute('height')).toBe('var(--ak-icon-size)');
+    expect(svg.getAttribute('width')).toBe('24');
+    expect(svg.getAttribute('height')).toBe('24');
     expect(svg.getAttribute('style')).toContain('--ak-icon-size:20px');
   });
 
   it('applies custom size', () => {
     container = mount(<TestIcon size={32} />);
     const svg = container.querySelector('svg')!;
-    expect(svg.getAttribute('width')).toBe('var(--ak-icon-size)');
-    expect(svg.getAttribute('height')).toBe('var(--ak-icon-size)');
+    expect(svg.getAttribute('width')).toBe('24');
+    expect(svg.getAttribute('height')).toBe('24');
     expect(svg.getAttribute('style')).toContain('--ak-icon-size:32px');
   });
 
@@ -62,7 +73,9 @@ describe('createIcon — rendered output', () => {
     container = mount(<TestIcon size="sm" />);
     const svg = container.querySelector('svg')!;
     expect(svg.getAttribute('data-size')).toBe('sm');
-    expect(svg.getAttribute('style')).toContain('--ak-icon-size:var(--ak-icon-size-sm');
+    expect(svg.getAttribute('style')).toContain(
+      '--ak-icon-size:var(--ak-icon-size-sm'
+    );
   });
 
   it('does not emit semantic size hooks for raw CSS sizes', () => {
@@ -89,14 +102,20 @@ describe('createIcon — rendered output', () => {
   it('routes stroke width through the theme contract variable', () => {
     container = mount(<TestIcon />);
     const svg = container.querySelector('svg')!;
-    expect(svg.getAttribute('stroke-width')).toBe('var(--ak-icon-stroke-width)');
-    expect(svg.getAttribute('style')).toContain('--ak-icon-stroke-width:var(--ak-icon-stroke-width-md, 2)');
+    expect(svg.getAttribute('stroke-width')).toBe(
+      'var(--ak-icon-stroke-width)'
+    );
+    expect(svg.getAttribute('style')).toContain(
+      '--ak-icon-stroke-width:var(--ak-icon-stroke-width-md, 2)'
+    );
   });
 
   it('preserves explicit stroke width overrides', () => {
     container = mount(<TestIcon strokeWidth={1.5} />);
     const svg = container.querySelector('svg')!;
-    expect(svg.getAttribute('style')).toContain('--ak-icon-stroke-width:1.5');
+    expect(svg.getAttribute('style')).toContain(
+      '--ak-icon-stroke-width:var(--ak-icon-stroke-width-md, 1.5)'
+    );
   });
 
   it('sets aria-hidden when no title is provided', () => {
@@ -134,18 +153,24 @@ describe('createIcon — rendered output', () => {
 
   it('applies class prop', () => {
     container = mount(<TestIcon class="icon-sm" />);
-    expect(container.querySelector('svg')!.getAttribute('class')).toBe('icon-sm');
+    expect(container.querySelector('svg')!.getAttribute('class')).toBe(
+      'icon-sm'
+    );
   });
 
   it('merges user style with icon contract variables', () => {
     container = mount(<TestIcon style="opacity:0.5" />);
     const style = container.querySelector('svg')!.getAttribute('style') ?? '';
     expect(style).toContain('--ak-icon-size:20px');
+    expect(style).toContain('display:inline-block');
+    expect(style).toContain('flex-shrink:0');
     expect(style).toContain('opacity:0.5');
   });
 
   it('passes arbitrary props through to the svg element', () => {
     container = mount(<TestIcon data-testid="my-icon" />);
-    expect(container.querySelector('svg')!.getAttribute('data-testid')).toBe('my-icon');
+    expect(container.querySelector('svg')!.getAttribute('data-testid')).toBe(
+      'my-icon'
+    );
   });
 });

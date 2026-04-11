@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite-plus';
 
 // We replicate the relevant JSX parts of the askr() vite plugin inline rather
 // than importing it, because the plugin's dist bundles its own Vite copy which
@@ -19,6 +19,7 @@ export default defineConfig({
   },
   oxc: {
     jsx: { runtime: 'automatic', importSource: '@askrjs/askr' },
-    jsxInject: "import { jsx, jsxs, Fragment } from '@askrjs/askr/jsx-runtime';",
+    jsxInject:
+      "import { jsx, jsxs, Fragment } from '@askrjs/askr/jsx-runtime';",
   },
 });
