@@ -61,8 +61,8 @@
   },
   "scripts": {
     "generate": "node scripts/generate.js",
-    "build": "npm run generate && vp build && tsc -p tsconfig.build.json --emitDeclarationOnly",
-    "dev": "vp build --watch",
+    "build": "npm run generate && vp pack",
+    "dev": "npm run generate && vp pack --watch",
     "test": "vp test run",
     "test:types": "npm run generate && tsc -p tsconfig.build.json --noEmit",
     "fmt": "vp fmt .",
