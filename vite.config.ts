@@ -7,6 +7,18 @@ export default defineConfig({
     jsx: 'automatic',
     jsxImportSource: '@askrjs/askr',
   },
+  pack: {
+    entry: 'src/index.ts',
+    format: ['esm'],
+    outDir: 'dist',
+    platform: 'neutral',
+    dts: true,
+    sourcemap: true,
+    unbundle: true,
+    deps: {
+      neverBundle: [/^@askrjs\/(?:askr|askr-ui)(?:\/.*)?$/],
+    },
+  },
   build: {
     minify: false,
     sourcemap: true,
