@@ -63,7 +63,8 @@
     "generate": "node scripts/generate.js",
     "build": "npm run generate && vp pack",
     "dev": "npm run generate && vp pack --watch",
-    "test": "vp test run",
+    "test": "npm run test:unit",
+    "test:unit": "vp test run -c vitest.config.ts",
     "test:types": "npm run generate && tsc -p tsconfig.build.json --noEmit",
     "fmt": "vp fmt .",
     "lint": "vp fmt --check ."
