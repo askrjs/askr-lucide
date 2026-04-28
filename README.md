@@ -13,7 +13,7 @@ Requires `@askrjs/askr` as a peer dependency.
 ## Usage
 
 ```tsx
-import { SearchIcon, XIcon, MenuIcon } from '@askrjs/askr-lucide';
+import { SearchIcon, XIcon, MenuIcon } from "@askrjs/askr-lucide";
 
 function App() {
   return (
@@ -73,10 +73,10 @@ Each icon is a named export. Import only what you use:
 
 ```tsx
 // Only SearchIcon is included in your bundle
-import { SearchIcon } from '@askrjs/askr-lucide';
+import { SearchIcon } from "@askrjs/askr-lucide";
 
 // Deep import, same effect, explicit path
-import { SearchIcon } from '@askrjs/askr-lucide/icons/search';
+import { SearchIcon } from "@askrjs/askr-lucide/icons/search";
 ```
 
 The package is marked `"sideEffects": false` and built with `preserveModules`, so bundlers can eliminate unused icons completely.

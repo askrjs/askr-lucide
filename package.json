@@ -2,39 +2,36 @@
   "name": "@askrjs/askr-lucide",
   "version": "0.0.1",
   "description": "Thin Askr wrappers for the Lucide SVG icon set",
-  "type": "module",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/askrjs/askr-lucide.git"
-  },
+  "keywords": [
+    "askr",
+    "askrjs",
+    "components",
+    "icons",
+    "lucide",
+    "svg"
+  ],
   "homepage": "https://github.com/askrjs/askr-lucide#readme",
   "bugs": {
     "url": "https://github.com/askrjs/askr-lucide/issues"
   },
+  "license": "MIT",
   "author": {
     "name": "askrjs",
     "url": "https://github.com/askrjs"
   },
-  "engines": {
-    "node": ">=18"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/askrjs/askr-lucide.git"
   },
-  "sideEffects": false,
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "README.md"
   ],
-  "keywords": [
-    "askr",
-    "askrjs",
-    "icons",
-    "lucide",
-    "svg",
-    "components"
-  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -49,16 +46,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "peerDependencies": {
-    "@askrjs/askr": "0.0.1"
-  },
-  "devDependencies": {
-    "@askrjs/askr": "file:../askr",
-    "jsdom": "^29.0.2",
-    "lucide": "latest",
-    "typescript": "^6.0.3",
-    "vite-plus": "^0.1.19"
-  },
   "scripts": {
     "generate": "node scripts/generate.js",
     "build": "npm run generate && vp pack",
@@ -68,5 +55,18 @@
     "test:types": "npm run generate && tsc -p tsconfig.build.json --noEmit",
     "fmt": "vp fmt .",
     "lint": "vp fmt --check ."
+  },
+  "devDependencies": {
+    "@askrjs/askr": "file:../askr",
+    "jsdom": "^29.1.0",
+    "lucide": "latest",
+    "typescript": "^6.0.3",
+    "vite-plus": "^0.1.19"
+  },
+  "peerDependencies": {
+    "@askrjs/askr": "0.0.1"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
