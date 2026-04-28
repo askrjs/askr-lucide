@@ -1,4 +1,4 @@
-import type { Props } from '@askrjs/askr';
+import type { Props } from "@askrjs/askr";
 
 declare global {
   namespace JSX {
