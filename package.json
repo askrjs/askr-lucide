@@ -30,7 +30,6 @@
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
@@ -47,15 +46,15 @@
     "access": "public"
   },
   "scripts": {
-    "generate": "node scripts/generate.js",
     "build": "npm run generate && vp pack",
     "dev": "npm run generate && vp pack --watch",
-    "test": "npm run test:unit",
-    "test:unit": "vp test run -c vitest.config.ts",
-    "test:types": "npm run generate && tsc -p tsconfig.build.json --noEmit",
     "fmt": "vp fmt .",
-    "lint": "vp fmt --check .",
-    "prepublishOnly": "npm run build"
+    "generate": "node scripts/generate.js",
+    "lint": "vp lint .",
+    "prepublishOnly": "npm run build",
+    "test": "npm run test:unit",
+    "test:types": "npm run generate && tsc -p tsconfig.build.json --noEmit",
+    "test:unit": "vp test run -c vitest.config.ts"
   },
   "devDependencies": {
     "@askrjs/askr": "file:../askr",
