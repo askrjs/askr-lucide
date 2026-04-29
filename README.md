@@ -1,11 +1,11 @@
-# @askrjs/askr-lucide
+﻿# @askrjs/lucide
 
 Thin Askr wrappers for the [Lucide](https://lucide.dev) SVG icon set.
 
 ## Install
 
 ```bash
-npm install @askrjs/askr-lucide
+npm install @askrjs/lucide
 ```
 
 Requires `@askrjs/askr` as a peer dependency.
@@ -13,7 +13,7 @@ Requires `@askrjs/askr` as a peer dependency.
 ## Usage
 
 ```tsx
-import { SearchIcon, XIcon, MenuIcon } from "@askrjs/askr-lucide";
+import { SearchIcon, XIcon, MenuIcon } from "@askrjs/lucide";
 
 function App() {
   return (
@@ -73,10 +73,10 @@ Each icon is a named export. Import only what you use:
 
 ```tsx
 // Only SearchIcon is included in your bundle
-import { SearchIcon } from "@askrjs/askr-lucide";
+import { SearchIcon } from "@askrjs/lucide";
 
 // Deep import, same effect, explicit path
-import { SearchIcon } from "@askrjs/askr-lucide/icons/search";
+import { SearchIcon } from "@askrjs/lucide/icons/search";
 ```
 
 The package is marked `"sideEffects": false` and built with `preserveModules`, so bundlers can eliminate unused icons completely.
@@ -90,3 +90,4 @@ This package is a binding layer, not an icon framework. It does not:
 - depend on Lucide at runtime
 
 `createIcon` is a thin adapter over `@askrjs/askr/foundations`' `IconBase`. It closes over static SVG node data and returns a plain Askr component function that implements the shared icon contract. Each icon is a direct named export, nothing more.
+

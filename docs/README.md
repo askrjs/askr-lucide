@@ -1,11 +1,11 @@
-# @askrjs/askr-lucide
+﻿# @askrjs/lucide
 
 Thin Askr wrappers for the [Lucide](https://lucide.dev) SVG icon set.
 
 ## Usage
 
 ```tsx
-import { SaveIcon, TrashIcon, PlusIcon } from "@askrjs/askr-lucide";
+import { SaveIcon, TrashIcon, PlusIcon } from "@askrjs/lucide";
 
 <SaveIcon size={16} aria-hidden="true" />;
 ```
@@ -17,15 +17,15 @@ import { SaveIcon, TrashIcon, PlusIcon } from "@askrjs/askr-lucide";
 | `size`        | `number \| string` | `24`    | Width and height in px         |
 | `color`       | `string`           | current | CSS color value                |
 | `strokeWidth` | `number`           | `2`     | SVG stroke width               |
-| `aria-hidden` | `boolean`          | —       | Hide from assistive technology |
-| `aria-label`  | `string`           | —       | Accessible label when visible  |
+| `aria-hidden` | `boolean`          | â€”       | Hide from assistive technology |
+| `aria-label`  | `string`           | â€”       | Accessible label when visible  |
 
 ## Tree-shaking
 
-Import icons individually — only the icons you import are bundled:
+Import icons individually â€” only the icons you import are bundled:
 
 ```tsx
-import { ArrowRightIcon } from "@askrjs/askr-lucide/icons/arrow-right";
+import { ArrowRightIcon } from "@askrjs/lucide/icons/arrow-right";
 ```
 
 ## Generation
@@ -40,3 +40,4 @@ npm run generate
 
 - [Lucide icon reference](https://lucide.dev/icons)
 - [askr-ui composition patterns](../askr-ui/docs/composition.md)
+
