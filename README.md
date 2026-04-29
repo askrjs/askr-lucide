@@ -90,4 +90,3 @@ This package is a binding layer, not an icon framework. It does not:
 - depend on Lucide at runtime
 
 `createIcon` is a thin adapter over `@askrjs/askr/foundations`' `IconBase`. It closes over static SVG node data and returns a plain Askr component function that implements the shared icon contract. Each icon is a direct named export, nothing more.
-
