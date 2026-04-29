@@ -40,4 +40,3 @@ npm run generate
 
 - [Lucide icon reference](https://lucide.dev/icons)
 - [askr-ui composition patterns](https://github.com/askrjs/askr-ui/tree/main/docs/composition.md)
-
