@@ -39,5 +39,5 @@ npm run generate
 ## See also
 
 - [Lucide icon reference](https://lucide.dev/icons)
-- [askr-ui composition patterns](../askr-ui/docs/composition.md)
+- [askr-ui composition patterns](https://github.com/askrjs/askr-ui/tree/main/docs/composition.md)
 
