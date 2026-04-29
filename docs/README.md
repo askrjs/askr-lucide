@@ -17,12 +17,12 @@ import { SaveIcon, TrashIcon, PlusIcon } from "@askrjs/lucide";
 | `size`        | `number \| string` | `24`    | Width and height in px         |
 | `color`       | `string`           | current | CSS color value                |
 | `strokeWidth` | `number`           | `2`     | SVG stroke width               |
-| `aria-hidden` | `boolean`          | â€”       | Hide from assistive technology |
-| `aria-label`  | `string`           | â€”       | Accessible label when visible  |
+| `aria-hidden` | `boolean`          | -       | Hide from assistive technology |
+| `aria-label`  | `string`           | -       | Accessible label when visible  |
 
 ## Tree-shaking
 
-Import icons individually â€” only the icons you import are bundled:
+Import icons individually - only the icons you import are bundled:
 
 ```tsx
 import { ArrowRightIcon } from "@askrjs/lucide/icons/arrow-right";
