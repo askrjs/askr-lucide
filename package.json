@@ -57,14 +57,14 @@
     "test:unit": "vp test run -c vitest.config.ts"
   },
   "devDependencies": {
-    "@askrjs/askr": "^0.0.29",
+    "@askrjs/askr": ">=0.0.30 <0.1.0",
     "jsdom": "^29.1.0",
     "lucide": "latest",
     "typescript": "^6.0.3",
     "vite-plus": "^0.1.19"
   },
   "peerDependencies": {
-    "@askrjs/askr": "^0.0.29"
+    "@askrjs/askr": ">=0.0.30 <0.1.0"
   },
   "engines": {
     "node": ">=18"
