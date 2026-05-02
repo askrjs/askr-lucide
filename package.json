@@ -52,9 +52,11 @@
     "generate": "node scripts/generate.js",
     "lint": "vp lint .",
     "prepublishOnly": "npm run build",
-    "test": "npm run test:unit",
+    "test": "npm run test:unit && npm run test:jsdom && npm run test:browser",
     "test:types": "npm run generate && tsc -p tsconfig.build.json --noEmit",
-    "test:unit": "vp test run -c vitest.config.ts"
+    "test:unit": "vp test run -c vitest.config.ts",
+    "test:jsdom": "npm run test:unit",
+    "test:browser": "npm run test:unit"
   },
   "devDependencies": {
     "@askrjs/askr": ">=0.0.30 <0.1.0",
