@@ -5,7 +5,7 @@
  * any generated file (src/icons/ is gitignored and not checked in).
  */
 import { describe, it, expect, afterEach } from "vite-plus/test";
-import { createIsland } from "@askrjs/askr";
+import { createIsland } from "@askrjs/askr/boot";
 import { createIcon } from "../src/create-icon";
 import type { IconNode } from "../src/types";
 

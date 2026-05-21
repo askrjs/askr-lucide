@@ -8,7 +8,8 @@ Thin Askr wrappers for the [Lucide](https://lucide.dev) SVG icon set.
 npm install @askrjs/lucide
 ```
 
-Requires `@askrjs/askr` as a peer dependency.
+Requires `@askrjs/askr` `>=0.0.37` as a peer dependency.
+The repo toolchain expects Node `20.19+` for local builds and tests.
 
 ## Usage
 
