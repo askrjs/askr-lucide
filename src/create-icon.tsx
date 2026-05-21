@@ -1,5 +1,5 @@
 import { jsx as createSvgNode } from "@askrjs/askr/jsx-runtime";
-import { IconBase } from "@askrjs/askr/foundations";
+import { IconBase } from "@askrjs/askr/foundations/icon";
 import type { IconNode, IconProps } from "./types";
 
 export function createIcon(displayName: string, iconNode: IconNode) {
