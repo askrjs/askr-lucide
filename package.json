@@ -57,7 +57,7 @@
     "test:unit": "vp test run -c vitest.config.ts"
   },
   "devDependencies": {
-    "@askrjs/askr": "^0.0.41",
+    "@askrjs/askr": ">=0.0.37 <0.1.0",
     "jsdom": "^29.1.1",
     "lucide": "1.17.0",
     "typescript": "^6.0.3",
