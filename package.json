@@ -1,6 +1,6 @@
 {
   "name": "@askrjs/lucide",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Thin Askr wrappers for the Lucide SVG icon set",
   "keywords": [
     "askr",
@@ -57,7 +57,7 @@
     "test:unit": "vp test run -c vitest.config.ts"
   },
   "devDependencies": {
-    "@askrjs/askr": "^0.0.40",
+    "@askrjs/askr": "^0.0.41",
     "jsdom": "^29.1.1",
     "lucide": "1.17.0",
     "typescript": "^6.0.3",
