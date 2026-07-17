@@ -62,7 +62,7 @@
     "test:unit": "vp test run -c vitest.config.ts"
   },
   "devDependencies": {
-    "@askrjs/askr": "file:../askr",
+    "@askrjs/askr": ">=0.0.52 <0.1.0",
     "jsdom": "^29.1.1",
     "lucide": "1.17.0",
     "publint": "^0.3.21",
@@ -70,7 +70,7 @@
     "vite-plus": "^0.2.4"
   },
   "peerDependencies": {
-    "@askrjs/askr": ">=0.0.53 <0.1.0"
+    "@askrjs/askr": ">=0.0.52 <0.1.0"
   },
   "engines": {
     "node": ">=20.19.0"
