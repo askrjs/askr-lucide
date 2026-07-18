@@ -1,5 +1,5 @@
 import * as LucideIcons from "lucide";
-import { writeFileSync, mkdirSync, rmSync, existsSync } from "node:fs";
+import { writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -50,16 +50,6 @@ export function generate() {
   for (const { name, kebab, iconNode } of icons) {
     writeFileSync(join(iconsDir, `${kebab}.ts`), iconFileContent(name, iconNode), "utf8");
     indexLines.push(indexEntry(name, kebab));
-  }
-
-  const legacyGIndex = join(__dirname, "../src/index.g.ts");
-  if (existsSync(legacyGIndex)) {
-    rmSync(legacyGIndex, { force: true });
-  }
-
-  const legacyGeneratedIndex = join(__dirname, "../src/index.generated.ts");
-  if (existsSync(legacyGeneratedIndex)) {
-    rmSync(legacyGeneratedIndex, { force: true });
   }
 
   writeFileSync(join(__dirname, "../src/index.ts"), indexLines.join("\n") + "\n", "utf8");
