@@ -64,7 +64,7 @@
   "devDependencies": {
     "@askrjs/askr": ">=0.0.52 <0.1.0",
     "jsdom": "^29.1.1",
-    "lucide": "1.17.0",
+    "lucide": "1.25.0",
     "publint": "^0.3.21",
     "typescript": "^6.0.3",
     "vite-plus": "^0.2.4"
