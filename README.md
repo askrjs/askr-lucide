@@ -1,5 +1,8 @@
 # @askrjs/lucide
 
+[![CI](https://github.com/askrjs/askr-lucide/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/askrjs/askr-lucide/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/%40askrjs%2Flucide.svg)](https://www.npmjs.com/package/@askrjs/lucide)
+
 Thin Askr wrappers for the [Lucide](https://lucide.dev) SVG icon set.
 
 ## Install
