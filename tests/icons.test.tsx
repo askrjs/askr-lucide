@@ -24,7 +24,7 @@ function mount(element: JSX.Element): HTMLElement {
 }
 
 function unmount(container: HTMLElement): void {
-  document.body.removeChild(container);
+  container?.remove();
 }
 
 function getNormalizedStyle(element: Element): string {
@@ -168,5 +168,40 @@ describe("createIcon — rendered output", () => {
   it("passes arbitrary props through to the svg element", () => {
     container = mount(<TestIcon data-testid="my-icon" />);
     expect(container.querySelector("svg")!.getAttribute("data-testid")).toBe("my-icon");
+  });
+
+  it("owns a defensive copy of accepted definitions", () => {
+    const mutable = [["circle", { cx: "4", cy: "4", r: "2" }]] as [
+      string,
+      Record<string, string>,
+    ][];
+    const StableIcon = createIcon("StableIcon", mutable);
+    mutable[0][0] = "path";
+    mutable[0][1].cx = "99";
+    mutable.push(["line", { x1: "0", x2: "1" }]);
+
+    container = mount(<StableIcon />);
+    expect(container.querySelectorAll("svg > *")).toHaveLength(1);
+    expect(container.querySelector("circle")?.getAttribute("cx")).toBe("4");
+    expect(container.querySelector("path")).toBeNull();
+  });
+
+  it.each([
+    ["script elements", [["script", {}]]],
+    ["event attributes", [["path", { onclick: "alert(1)" }]]],
+    ["URL-bearing href values", [["use", { href: "https://evil.test/icon.svg#x" }]]],
+    ["CSS URL values", [["path", { fill: "url(https://evil.test/a.svg)" }]]],
+  ])("rejects unsafe %s", (_label, definition) => {
+    expect(() => createIcon("UnsafeIcon", definition as IconNode)).toThrow(TypeError);
+  });
+
+  it.each([
+    ["a non-array definition", null],
+    ["a malformed entry", [["path"]]],
+    ["non-object attributes", [["path", null]]],
+    ["array attributes", [["path", []]]],
+    ["non-string attribute values", [["path", { d: 42 }]]],
+  ])("rejects %s", (_label, definition) => {
+    expect(() => createIcon("InvalidIcon", definition as unknown as IconNode)).toThrow(TypeError);
   });
 });
