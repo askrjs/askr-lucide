@@ -1,6 +1,6 @@
 {
   "name": "@askrjs/lucide",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Thin Askr wrappers for the Lucide SVG icon set",
   "keywords": [
     "askr",
