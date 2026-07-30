@@ -12,6 +12,17 @@ export default defineConfig({
     environment: "jsdom",
     globals: true,
     include: ["tests/**/*.test.{ts,tsx}"],
+    coverage: {
+      provider: "v8",
+      include: ["src/create-icon.tsx"],
+      reporter: ["text", "json-summary"],
+      thresholds: {
+        statements: 100,
+        branches: 100,
+        functions: 100,
+        lines: 100,
+      },
+    },
   },
   oxc: {
     jsx: { runtime: "automatic", importSource: "@askrjs/askr" },
