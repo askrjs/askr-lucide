@@ -2,7 +2,16 @@ import { jsx as createSvgNode } from "@askrjs/askr/jsx-runtime";
 import { IconBase } from "@askrjs/askr/foundations/icon";
 import type { IconNode, IconProps } from "./types";
 
-const SAFE_TAGS = new Set(["circle", "ellipse", "g", "line", "path", "polygon", "polyline", "rect"]);
+const SAFE_TAGS = new Set([
+  "circle",
+  "ellipse",
+  "g",
+  "line",
+  "path",
+  "polygon",
+  "polyline",
+  "rect",
+]);
 const URL_ATTRIBUTE = /^(?:href|src|xlink:href)$/i;
 const URL_VALUE = /url\s*\(/i;
 
