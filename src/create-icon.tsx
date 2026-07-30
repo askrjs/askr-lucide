@@ -26,10 +26,11 @@ function copyDefinition(iconNode: IconNode): IconNode {
     if (!attributes || typeof attributes !== "object" || Array.isArray(attributes)) {
       throw new TypeError("icon definition attributes must be an object");
     }
-    const copied: Record<string, string> = {};
+    const copied = Object.create(null) as Record<string, string>;
     for (const [name, value] of Object.entries(attributes)) {
       if (
         /^on/i.test(name) ||
+        /^(?:__proto__|constructor|prototype)$/i.test(name) ||
         URL_ATTRIBUTE.test(name) ||
         typeof value !== "string" ||
         URL_VALUE.test(value)

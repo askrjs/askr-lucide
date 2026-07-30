@@ -23,7 +23,7 @@ function mount(element: JSX.Element): HTMLElement {
   return container;
 }
 
-function unmount(container: HTMLElement): void {
+function unmount(container: HTMLElement | undefined): void {
   container?.remove();
 }
 
@@ -184,6 +184,13 @@ describe("createIcon — rendered output", () => {
     expect(container.querySelectorAll("svg > *")).toHaveLength(1);
     expect(container.querySelector("circle")?.getAttribute("cx")).toBe("4");
     expect(container.querySelector("path")).toBeNull();
+  });
+
+  it("does not interpret prototype-shaped attribute names while copying", () => {
+    const attributes = JSON.parse('{"__proto__":"safe","d":"M0 0"}') as Record<string, string>;
+    expect(() => createIcon("SafeIcon", [["path", attributes]])).toThrow(TypeError);
+
+    expect((Object.prototype as { polluted?: boolean }).polluted).toBeUndefined();
   });
 
   it.each([
