@@ -3,17 +3,18 @@ import { execFileSync } from "node:child_process";
 import { normalize } from "node:path";
 
 const npm = process.platform === "win32" ? "npm.cmd" : "npm";
-const [packed] = JSON.parse(
+const packedResult = JSON.parse(
   execFileSync(npm, ["pack", "--ignore-scripts", "--dry-run", "--json"], {
     encoding: "utf8",
   }),
 );
+const packed = Array.isArray(packedResult) ? packedResult[0] : Object.values(packedResult)[0];
 const files = new Set(packed.files.map(({ path }) => normalize(path)));
 
 for (const path of files) {
   assert.match(
     path,
-    /^(?:LICENSE|README\.md|package\.json|dist[\\/].+)$/,
+    /^(?:LICENSE|README\.md|package\.json|capabilities\.json|dist[\\/].+)$/,
     `unexpected packed file: ${path}`,
   );
 }
