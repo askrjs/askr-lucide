@@ -10,12 +10,13 @@ const consumer = join(sandbox, "consumer");
 const npm = process.platform === "win32" ? "npm.cmd" : "npm";
 
 try {
-  const [{ filename }] = JSON.parse(
+  const packed = JSON.parse(
     execFileSync(npm, ["pack", "--ignore-scripts", "--json", "--pack-destination", sandbox], {
       cwd: root,
       encoding: "utf8",
     }),
   );
+  const { filename } = Array.isArray(packed) ? packed[0] : Object.values(packed)[0];
   mkdirSync(consumer);
   writeFileSync(
     join(consumer, "package.json"),
