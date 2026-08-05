@@ -6,8 +6,16 @@
       "intent": "tree-shakeable Lucide icon components",
       "package": "@askrjs/lucide",
       "import": "@askrjs/lucide",
-      "exports": ["SearchIcon", "XIcon", "MenuIcon", "createIcon"],
-      "constraints": ["icons are named exports", "icons inherit the shared Askr IconBase contract"],
+      "exports": [
+        "SearchIcon",
+        "XIcon",
+        "MenuIcon",
+        "createIcon"
+      ],
+      "constraints": [
+        "icons are named exports",
+        "icons inherit the shared Askr IconBase contract"
+      ],
       "stability": "stable",
       "docs": "https://github.com/askrjs/askr-lucide/blob/main/README.md",
       "docsPath": "README.md"
@@ -16,8 +24,13 @@
       "intent": "individual icon subpath imports",
       "package": "@askrjs/lucide",
       "import": "@askrjs/lucide/icons/*",
-      "exports": ["generated icon component"],
-      "constraints": ["subpaths are generated", "icons are decorative unless given a title"],
+      "exports": [
+        "generated icon component"
+      ],
+      "constraints": [
+        "subpaths are generated",
+        "icons are decorative unless given a title"
+      ],
       "stability": "stable",
       "docs": "https://github.com/askrjs/askr-lucide/blob/main/README.md",
       "docsPath": "README.md"
