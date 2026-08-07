@@ -35,18 +35,18 @@ describe("createIcon — rendered output", () => {
   let container: HTMLElement;
   afterEach(() => unmount(container));
 
-  it("renders an <svg> element", () => {
+  it("should render an <svg> element", () => {
     container = mount(<TestIcon />);
     expect(container.querySelector("svg")).not.toBeNull();
   });
 
-  it("renders svg children from the icon node", () => {
+  it("should render svg children from the icon node", () => {
     container = mount(<TestIcon />);
     expect(container.querySelector("svg circle")).not.toBeNull();
     expect(container.querySelector("svg path")).not.toBeNull();
   });
 
-  it("renders the svg tree in the SVG namespace", () => {
+  it("should render the svg tree in the SVG namespace", () => {
     container = mount(<TestIcon />);
     const svg = container.querySelector("svg");
     const circle = container.querySelector("svg circle");
@@ -57,7 +57,7 @@ describe("createIcon — rendered output", () => {
     expect(path?.namespaceURI).toBe("http://www.w3.org/2000/svg");
   });
 
-  it("applies default size of 20", () => {
+  it("should apply default size of 20", () => {
     container = mount(<TestIcon />);
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("width")).toBe("24");
@@ -65,7 +65,7 @@ describe("createIcon — rendered output", () => {
     expect(getNormalizedStyle(svg)).toContain("--ak-icon-size:20px");
   });
 
-  it("applies custom size", () => {
+  it("should apply custom size", () => {
     container = mount(<TestIcon size={32} />);
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("width")).toBe("24");
@@ -73,35 +73,35 @@ describe("createIcon — rendered output", () => {
     expect(getNormalizedStyle(svg)).toContain("--ak-icon-size:32px");
   });
 
-  it("emits semantic size hooks for named sizes", () => {
+  it("should emit semantic size hooks for named sizes", () => {
     container = mount(<TestIcon size="sm" />);
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("data-size")).toBe("sm");
     expect(getNormalizedStyle(svg)).toContain("--ak-icon-size:var(--ak-icon-size-sm");
   });
 
-  it("does not emit semantic size hooks for raw CSS sizes", () => {
+  it("should not emit semantic size hooks for raw CSS sizes", () => {
     container = mount(<TestIcon size="1.5rem" />);
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("data-size")).toBeNull();
     expect(getNormalizedStyle(svg)).toContain("--ak-icon-size:1.5rem");
   });
 
-  it("sets default stroke color to currentColor", () => {
+  it("should set default stroke color to currentColor", () => {
     container = mount(<TestIcon />);
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("stroke")).toBe("currentColor");
     expect(svg.getAttribute("data-color")).toBe("current");
   });
 
-  it("applies custom color via stroke attribute", () => {
+  it("should apply custom color via stroke attribute", () => {
     container = mount(<TestIcon color="red" />);
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("stroke")).toBe("red");
     expect(svg.getAttribute("data-color")).toBeNull();
   });
 
-  it("routes stroke width through the theme contract variable", () => {
+  it("should route stroke width through the theme contract variable", () => {
     container = mount(<TestIcon />);
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("stroke-width")).toBe("var(--ak-icon-stroke-width)");
@@ -110,7 +110,7 @@ describe("createIcon — rendered output", () => {
     );
   });
 
-  it("preserves explicit stroke width overrides", () => {
+  it("should preserve explicit stroke width overrides", () => {
     container = mount(<TestIcon strokeWidth={1.5} />);
     const svg = container.querySelector("svg")!;
     expect(getNormalizedStyle(svg)).toContain(
@@ -118,45 +118,45 @@ describe("createIcon — rendered output", () => {
     );
   });
 
-  it("sets aria-hidden when no title is provided", () => {
+  it("should set aria-hidden when no title is provided", () => {
     container = mount(<TestIcon />);
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("aria-hidden")).toBe("true");
     expect(svg.getAttribute("data-decorative")).toBe("true");
   });
 
-  it("does not set aria-hidden when title is provided", () => {
+  it("should not set aria-hidden when title is provided", () => {
     container = mount(<TestIcon title="Search" />);
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("aria-hidden")).toBeNull();
     expect(svg.getAttribute("data-decorative")).toBeNull();
   });
 
-  it("renders a <title> element when title prop is passed", () => {
+  it("should render a <title> element when title prop is passed", () => {
     container = mount(<TestIcon title="Search icon" />);
     const title = container.querySelector("svg title")!;
     expect(title).not.toBeNull();
     expect(title.textContent).toBe("Search icon");
   });
 
-  it("sets role=img", () => {
+  it("should set role=img", () => {
     container = mount(<TestIcon />);
     expect(container.querySelector("svg")!.getAttribute("role")).toBe("img");
   });
 
-  it("emits stable icon theme hooks", () => {
+  it("should emit stable icon theme hooks", () => {
     container = mount(<TestIcon />);
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("data-slot")).toBe("icon");
     expect(svg.getAttribute("data-icon")).toBe("TestIcon");
   });
 
-  it("applies class prop", () => {
+  it("should apply class prop", () => {
     container = mount(<TestIcon class="icon-sm" />);
     expect(container.querySelector("svg")!.getAttribute("class")).toBe("icon-sm");
   });
 
-  it("merges user style with icon contract variables", () => {
+  it("should merge user style with icon contract variables", () => {
     container = mount(<TestIcon style="opacity:0.5" />);
     const style = getNormalizedStyle(container.querySelector("svg")!);
     expect(style).toContain("--ak-icon-size:20px");
@@ -165,12 +165,12 @@ describe("createIcon — rendered output", () => {
     expect(style).toContain("opacity:0.5");
   });
 
-  it("passes arbitrary props through to the svg element", () => {
+  it("should pass arbitrary props through to the svg element", () => {
     container = mount(<TestIcon data-testid="my-icon" />);
     expect(container.querySelector("svg")!.getAttribute("data-testid")).toBe("my-icon");
   });
 
-  it("owns a defensive copy of accepted definitions", () => {
+  it("should own a defensive copy of accepted definitions", () => {
     const mutable = [["circle", { cx: "4", cy: "4", r: "2" }]] as [
       string,
       Record<string, string>,
@@ -186,7 +186,7 @@ describe("createIcon — rendered output", () => {
     expect(container.querySelector("path")).toBeNull();
   });
 
-  it("does not interpret prototype-shaped attribute names while copying", () => {
+  it("should not interpret prototype-shaped attribute names while copying", () => {
     const attributes = JSON.parse('{"__proto__":"safe","d":"M0 0"}') as Record<string, string>;
     expect(() => createIcon("SafeIcon", [["path", attributes]])).toThrow(TypeError);
 
