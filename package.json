@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/askrjs/askr-lucide.git"
+    "url": "git+https://github.com/askrjs/askr-lucide.git"
   },
   "files": [
     "dist",
@@ -66,16 +66,16 @@
     "test:unit": "vp test run -c vitest.config.ts"
   },
   "devDependencies": {
-    "@askrjs/askr": ">=0.0.87 <0.1.0",
+    "@askrjs/askr": ">=0.0.88 <0.1.0",
     "@vitest/coverage-v8": "^4.1.10",
     "jsdom": "^30.0.1",
-    "lucide": "1.29.0",
+    "lucide": "1.30.0",
     "publint": "^0.3.23",
     "typescript": "^7.0.2",
     "vite-plus": "^0.2.8"
   },
   "peerDependencies": {
-    "@askrjs/askr": ">=0.0.87 <0.1.0"
+    "@askrjs/askr": ">=0.0.88 <0.1.0"
   },
   "engines": {
     "node": ">=24.0.0"
