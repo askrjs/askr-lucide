@@ -34,17 +34,19 @@ export function collectIcons() {
     if (!Array.isArray(value)) continue;
     icons.push({ name, kebab: toKebab(name), iconNode: value });
   }
-  return icons;
+  return icons.sort(({ name: left }, { name: right }) =>
+    left < right ? -1 : left > right ? 1 : 0,
+  );
 }
 
-export function generate() {
+export function generate({ icons = collectIcons(), sourceDir } = {}) {
   const __dirname = dirname(fileURLToPath(import.meta.url));
-  const iconsDir = join(__dirname, "../src/icons");
+  const resolvedSourceDir = sourceDir ?? join(__dirname, "../src");
+  const iconsDir = join(resolvedSourceDir, "icons");
 
   rmSync(iconsDir, { recursive: true, force: true });
   mkdirSync(iconsDir, { recursive: true });
 
-  const icons = collectIcons();
   const indexLines = [indexPreamble()];
 
   for (const { name, kebab, iconNode } of icons) {
@@ -52,7 +54,7 @@ export function generate() {
     indexLines.push(indexEntry(name, kebab));
   }
 
-  writeFileSync(join(__dirname, "../src/index.ts"), indexLines.join("\n") + "\n", "utf8");
+  writeFileSync(join(resolvedSourceDir, "index.ts"), indexLines.join("\n") + "\n", "utf8");
   return icons.length;
 }
 
