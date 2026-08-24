@@ -12,19 +12,39 @@ const SAFE_TAGS = new Set([
   "polyline",
   "rect",
 ]);
+const SAFE_ATTRIBUTES = new Set([
+  "cx",
+  "cy",
+  "d",
+  "fill",
+  "height",
+  "points",
+  "r",
+  "rx",
+  "ry",
+  "width",
+  "x",
+  "x1",
+  "x2",
+  "y",
+  "y1",
+  "y2",
+]);
 const URL_ATTRIBUTE = /^(?:href|src|xlink:href)$/i;
 const URL_VALUE = /url\s*\(/i;
 
-function copyDefinition(iconNode: IconNode): IconNode {
-  if (!Array.isArray(iconNode)) throw new TypeError("icon definition must be an array");
+function copyDefinition(displayName: string, iconNode: IconNode): IconNode {
+  if (!Array.isArray(iconNode)) {
+    throw new TypeError(`${displayName}: icon definition must be an array`);
+  }
 
   return iconNode.map((entry) => {
     if (!Array.isArray(entry) || entry.length !== 2 || !SAFE_TAGS.has(entry[0])) {
-      throw new TypeError("icon definition contains an unsafe SVG element");
+      throw new TypeError(`${displayName}: icon definition contains an unsafe SVG element`);
     }
     const attributes = entry[1];
     if (!attributes || typeof attributes !== "object" || Array.isArray(attributes)) {
-      throw new TypeError("icon definition attributes must be an object");
+      throw new TypeError(`${displayName}: icon definition attributes must be an object`);
     }
     const copied = Object.create(null) as Record<string, string>;
     for (const [name, value] of Object.entries(attributes)) {
@@ -32,10 +52,13 @@ function copyDefinition(iconNode: IconNode): IconNode {
         /^on/i.test(name) ||
         /^(?:__proto__|constructor|prototype)$/i.test(name) ||
         URL_ATTRIBUTE.test(name) ||
+        !SAFE_ATTRIBUTES.has(name) ||
         typeof value !== "string" ||
         URL_VALUE.test(value)
       ) {
-        throw new TypeError("icon definition contains an unsafe SVG attribute");
+        throw new TypeError(
+          `${displayName}: icon definition contains an unsafe SVG attribute (${name})`,
+        );
       }
       copied[name] = value;
     }
@@ -44,7 +67,7 @@ function copyDefinition(iconNode: IconNode): IconNode {
 }
 
 export function createIcon(displayName: string, iconNode: IconNode) {
-  const definition = Object.freeze(copyDefinition(iconNode));
+  const definition = Object.freeze(copyDefinition(displayName, iconNode));
 
   function Icon({ ...rest }: IconProps) {
     return IconBase({

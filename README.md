@@ -11,13 +11,15 @@ Thin Askr wrappers for the [Lucide](https://lucide.dev) SVG icon set.
 npm install @askrjs/lucide
 ```
 
-Requires `@askrjs/askr` `>=0.0.37` as a peer dependency.
-The repo toolchain expects Node `20.19+` for local builds and tests.
+Requires `@askrjs/askr` `>=0.2.0 <0.3.0` as a peer dependency.
+The repo toolchain expects Node `24+` for local builds and tests.
 
 ## Usage
 
 ```tsx
-import { SearchIcon, XIcon, MenuIcon } from "@askrjs/lucide";
+import { SearchIcon } from "@askrjs/lucide/icons/search";
+import { XIcon } from "@askrjs/lucide/icons/x";
+import { MenuIcon } from "@askrjs/lucide/icons/menu";
 
 function App() {
   return (
@@ -59,14 +61,19 @@ Passing a `title` removes `aria-hidden` and renders a `<title>` element inside t
 
 ## Tree shaking
 
-Each icon is a named export. Import only what you use:
-
-```tsx
-import { SearchIcon } from "@askrjs/lucide";
-```
+For production applications, prefer per-icon subpath imports. They avoid loading
+the roughly 2,000-module root barrel in development servers and bundlers that do
+not aggressively eliminate unused exports:
 
 ```tsx
 import { SearchIcon } from "@askrjs/lucide/icons/search";
+```
+
+The root barrel is convenient for prototyping. If you use it in production,
+verify tree shaking in your bundler:
+
+```tsx
+import { SearchIcon } from "@askrjs/lucide";
 ```
 
 The package is marked `"sideEffects": false` and built with `preserveModules`, so bundlers can eliminate unused icons completely.
