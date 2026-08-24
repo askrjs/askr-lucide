@@ -211,4 +211,45 @@ describe("createIcon — rendered output", () => {
   ])("rejects %s", (_label, definition) => {
     expect(() => createIcon("InvalidIcon", definition as unknown as IconNode)).toThrow(TypeError);
   });
+
+  it.each([
+    ["unsafe elements", [["script", {}]]],
+    ["unsafe attributes", [["path", { tabindex: "0" }]]],
+    ["malformed definitions", [["path"]]],
+  ])("identifies the icon when rejecting %s", (_label, definition) => {
+    expect(() => createIcon("BrokenSearchIcon", definition as IconNode)).toThrow(
+      /BrokenSearchIcon/,
+    );
+  });
+
+  it("accepts every SVG element and attribute emitted by the pinned Lucide source", async () => {
+    const { collectIcons } = await import("../scripts/generate.js");
+    for (const { name, iconNode } of collectIcons()) {
+      expect(() => createIcon(`${name}Icon`, iconNode)).not.toThrow();
+    }
+  });
+
+  it("renders many instances without sharing props or child nodes", () => {
+    container = mount(
+      <div>
+        {Array.from({ length: 100 }, (_, index) => (
+          <TestIcon title={`Icon ${index}`} data-instance={String(index)} />
+        ))}
+      </div>,
+    );
+    const icons = [...container.querySelectorAll("svg")];
+    expect(icons).toHaveLength(100);
+    expect(icons[0].getAttribute("data-instance")).toBe("0");
+    expect(icons[99].getAttribute("data-instance")).toBe("99");
+    expect(icons[0].querySelector("title")?.textContent).toBe("Icon 0");
+    expect(icons[99].querySelector("title")?.textContent).toBe("Icon 99");
+    expect(new Set(icons.map((icon) => icon.querySelector("circle"))).size).toBe(100);
+  });
+
+  it("accepts large inert path data without truncation", () => {
+    const pathData = `M0 0${" L1 1".repeat(20_000)}`;
+    const LargeIcon = createIcon("LargeIcon", [["path", { d: pathData }]]);
+    container = mount(<LargeIcon />);
+    expect(container.querySelector("path")?.getAttribute("d")).toBe(pathData);
+  });
 });
