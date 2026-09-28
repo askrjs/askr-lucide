@@ -6,6 +6,7 @@
  */
 import { describe, it, expect, afterEach } from "vite-plus/test";
 import { createIsland } from "@askrjs/askr/boot";
+import type { JSX } from "@askrjs/askr/jsx-runtime";
 import { createIcon } from "../src/create-icon";
 import type { IconNode } from "../src/types";
 
