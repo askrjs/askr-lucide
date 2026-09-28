@@ -52,7 +52,10 @@ describe("icon generator", () => {
 
   it("is byte-identical across repeated runs", () => {
     const sourceDir = sandbox();
-    const icons = collectIcons();
+    const icons = [
+      { name: "Search", kebab: "search", iconNode: [["path", { d: "M0 0" }]] },
+      { name: "Home", kebab: "home", iconNode: [["circle", { cx: "1" }]] },
+    ];
     generate({ icons, sourceDir });
     const first = snapshot(sourceDir);
     generate({ icons, sourceDir });

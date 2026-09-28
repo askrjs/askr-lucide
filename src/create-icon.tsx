@@ -1,8 +1,9 @@
 import { jsx as createSvgNode } from "@askrjs/askr/jsx-runtime";
+import type { JSX } from "@askrjs/askr/jsx-runtime";
 import { IconBase } from "@askrjs/askr/foundations/icon";
 import type { IconNode, IconProps } from "./types";
 
-const SAFE_TAGS = new Set([
+const SAFE_TAGS = [
   "circle",
   "ellipse",
   "g",
@@ -11,7 +12,14 @@ const SAFE_TAGS = new Set([
   "polygon",
   "polyline",
   "rect",
-]);
+] as const;
+type SafeSvgTag = (typeof SAFE_TAGS)[number];
+const SAFE_TAG_SET: ReadonlySet<string> = new Set(SAFE_TAGS);
+const createSafeSvgNode = createSvgNode as unknown as (
+  type: SafeSvgTag,
+  props: Record<string, unknown>,
+  key?: string | number,
+) => JSX.Element;
 const SAFE_ATTRIBUTES = new Set([
   "cx",
   "cy",
@@ -39,7 +47,7 @@ function copyDefinition(displayName: string, iconNode: IconNode): IconNode {
   }
 
   return iconNode.map((entry) => {
-    if (!Array.isArray(entry) || entry.length !== 2 || !SAFE_TAGS.has(entry[0])) {
+    if (!Array.isArray(entry) || entry.length !== 2 || !SAFE_TAG_SET.has(entry[0])) {
       throw new TypeError(`${displayName}: icon definition contains an unsafe SVG element`);
     }
     const attributes = entry[1];
@@ -74,7 +82,7 @@ export function createIcon(displayName: string, iconNode: IconNode) {
       ...rest,
       iconName: displayName,
       children: definition.map(([tag, attrs], i) =>
-        createSvgNode(tag, attrs as Record<string, unknown>, i),
+        createSafeSvgNode(tag as SafeSvgTag, attrs as Record<string, unknown>, i),
       ),
     });
   }
