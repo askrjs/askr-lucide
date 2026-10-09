@@ -26,7 +26,8 @@
   "files": [
     "dist",
     "README.md",
-    "capabilities.json"
+    "capabilities.json",
+    "CHANGELOG.md"
   ],
   "type": "module",
   "sideEffects": false,
