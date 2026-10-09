@@ -11,7 +11,7 @@ Thin Askr wrappers for the [Lucide](https://lucide.dev) SVG icon set.
 npm install @askrjs/lucide
 ```
 
-Requires `@askrjs/askr` `>=0.3.0 <0.4.0` as a peer dependency.
+Requires `@askrjs/askr` `>=0.4.0 <0.5.0` as a peer dependency.
 The repo toolchain expects Node `24+` for local builds and tests.
 
 ## Usage
@@ -86,4 +86,12 @@ This package is a generated binding layer, not an icon framework. It does not:
 - ship a runtime icon registry
 - depend on Lucide at runtime
 
-`createIcon` is a thin adapter over `@askrjs/askr/foundations`' `IconBase`. It closes over static SVG node data and returns a plain Askr component function that implements the shared icon contract.
+The private `createIcon` factory is a thin adapter over `@askrjs/askr/foundations`' `IconBase`. It closes over static SVG node data and returns a plain Askr component function that implements the shared icon contract.
+
+## 0.5 migration
+
+Icon components and documented per-icon paths remain supported. Import shared
+`IconProps` and `IconSizeToken` from `@askrjs/askr/foundations/icon`. The root
+`createIcon` factory and `IconNode` definition type become private; custom icon
+components compose core `IconBase` with authored SVG children. No compatibility
+alias is retained. See [the complete contract review](docs/0.5-contract-review.md).
