@@ -52,7 +52,7 @@ try {
       dependencies: { "@askrjs/lucide": `file:${join(sandbox, filename)}`, "@askrjs/askr": floor },
     }),
   );
-  runNpm(["install", "--ignore-scripts", "--no-audit", "--no-fund"], {
+  runNpm(["install", "--no-audit", "--no-fund"], {
     cwd: consumer,
     stdio: "pipe",
   });
