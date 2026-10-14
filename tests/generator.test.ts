@@ -7,6 +7,7 @@ import {
   generate,
   iconFileContent,
   indexEntry,
+  indexPreamble,
   toKebab,
 } from "../scripts/generate.js";
 
@@ -34,6 +35,17 @@ afterEach(() => {
 });
 
 describe("icon generator", () => {
+  it("should keep the generated root free of factory and duplicate type exports", () => {
+    const sourceDir = sandbox();
+    generate({
+      sourceDir,
+      icons: [{ name: "Search", kebab: "search", iconNode: [["path", { d: "M0 0" }]] }],
+    });
+    const root = readFileSync(join(sourceDir, "index.ts"), "utf8");
+    expect(root).toContain(indexEntry("Search", "search"));
+    expect(root).not.toMatch(/createIcon|IconNode|IconProps|IconSizeToken/);
+    expect(indexPreamble()).not.toContain("export");
+  });
   it("converts icon names and writes stable module syntax", () => {
     expect(toKebab("AArrowDown")).toBe("a-arrow-down");
     expect(indexEntry("Search", "search")).toBe("export { SearchIcon } from './icons/search';");

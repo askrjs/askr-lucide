@@ -5,7 +5,9 @@
  * any generated file (src/icons/ is gitignored and not checked in).
  */
 import { describe, it, expect, afterEach } from "vite-plus/test";
-import { createIsland } from "@askrjs/askr/boot";
+import { cleanupApp, createIsland, hasApp } from "@askrjs/askr/boot";
+import { renderToStringSync } from "@askrjs/askr/ssr";
+import type { IconProps } from "@askrjs/askr/foundations/icon";
 import type { JSX } from "@askrjs/askr/jsx-runtime";
 import { createIcon } from "../src/create-icon";
 import type { IconNode } from "../src/types";
@@ -25,6 +27,7 @@ function mount(element: JSX.Element): HTMLElement {
 }
 
 function unmount(container: HTMLElement | undefined): void {
+  if (container) cleanupApp(container);
   container?.remove();
 }
 
@@ -252,5 +255,92 @@ describe("createIcon — rendered output", () => {
     const LargeIcon = createIcon("LargeIcon", [["path", { d: pathData }]]);
     container = mount(<LargeIcon />);
     expect(container.querySelector("path")?.getAttribute("d")).toBe(pathData);
+  });
+
+  it.each([
+    { props: { "aria-label": "Label", "aria-hidden": false }, hidden: "true", title: null },
+    {
+      props: { title: "Search", "aria-label": "Label", "aria-hidden": true },
+      hidden: null,
+      title: "Search",
+    },
+    { props: { title: "", "aria-hidden": false }, hidden: "true", title: null },
+    {
+      props: { title: '<title & "text">', "aria-labelledby": "external-label" },
+      hidden: null,
+      title: '<title & "text">',
+    },
+  ])("should match client and SSR accessibility precedence", ({ props, hidden, title }) => {
+    container = mount(<TestIcon {...props} />);
+    const server = document.createElement("div");
+    server.innerHTML = renderToStringSync(() => <TestIcon {...props} />);
+    for (const svg of [container.querySelector("svg")!, server.querySelector("svg")!]) {
+      expect(svg.namespaceURI).toBe("http://www.w3.org/2000/svg");
+      expect(svg.getAttribute("aria-hidden")).toBe(hidden);
+      expect(svg.getAttribute("data-decorative")).toBe(hidden);
+      expect(svg.querySelector("title")?.textContent ?? null).toBe(title);
+      expect(svg.getAttribute("aria-label")).toBe(props["aria-label"] ?? null);
+      expect(svg.getAttribute("aria-labelledby")).toBe(props["aria-labelledby"] ?? null);
+      expect(svg.querySelectorAll("circle, path")).toHaveLength(2);
+    }
+  });
+
+  it.each([0, -1, 0.5, Number.NaN, Number.POSITIVE_INFINITY, "invalid-css"])(
+    "should retain SVG geometry when the shared size prop is %s",
+    (size) => {
+      container = mount(<TestIcon size={size} />);
+      const server = document.createElement("div");
+      server.innerHTML = renderToStringSync(() => <TestIcon size={size} />);
+      for (const svg of [container.querySelector("svg")!, server.querySelector("svg")!]) {
+        expect(svg.getAttribute("width")).toBe("24");
+        expect(svg.getAttribute("height")).toBe("24");
+        expect(svg.getAttribute("viewBox")).toBe("0 0 24 24");
+        expect(svg.querySelector("path")?.getAttribute("d")).toBe(FIXTURE_NODE[1][1].d);
+      }
+    },
+  );
+
+  it("should forward class, style and ref while retaining definition-owned output", () => {
+    const refs: Array<SVGSVGElement | null> = [];
+    const props: IconProps = {
+      class: "search-icon",
+      style: { marginInlineStart: "4px", opacity: 0.5 },
+      ref: (element) => {
+        refs.push(element);
+      },
+      children: "override",
+      iconName: "override",
+      "data-icon": "override",
+      xmlns: "invalid",
+      "data-note": "search",
+    };
+    for (let index = 0; index < 8; index++) {
+      container = mount(<TestIcon {...props} />);
+      const svg = container.querySelector("svg")!;
+      expect(refs[index * 2]).toBe(svg);
+      expect(svg.getAttribute("class")).toBe("search-icon");
+      expect(svg.style.marginInlineStart).toBe("4px");
+      expect(svg.style.opacity).toBe("0.5");
+      expect(svg.getAttribute("data-icon")).toBe("TestIcon");
+      expect(svg.getAttribute("data-note")).toBe("search");
+      expect(svg.getAttribute("xmlns")).toBe("http://www.w3.org/2000/svg");
+      expect(svg.textContent).not.toContain("override");
+      expect(svg.querySelectorAll("circle, path")).toHaveLength(2);
+      expect(hasApp(container)).toBe(true);
+      unmount(container);
+      expect(hasApp(container)).toBe(false);
+      expect(refs.at(-1)).toBeNull();
+      expect(refs).toHaveLength((index + 1) * 2);
+    }
+    expect(new Set(refs.filter(Boolean)).size).toBe(8);
+  });
+
+  it.each([
+    { fill: "URL(https://example.test/a.svg)" },
+    { "xlink:href": "#a" },
+    { OnLoad: "event()" },
+    { "fill-rule": "evenodd" },
+  ])("should reject attributes outside the pinned definition contract", (attributes) => {
+    expect(() => createIcon("UnsafeIcon", [["path", attributes]] as IconNode)).toThrow(TypeError);
   });
 });
