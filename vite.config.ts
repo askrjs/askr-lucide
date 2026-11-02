@@ -15,9 +15,7 @@ export default defineConfig({
     dts: true,
     sourcemap: true,
     unbundle: true,
-    deps: {
-      neverBundle: [/^@askrjs\/askr(?:\/.*)?$/],
-    },
+    deps: { resolveDepSubpath: true, neverBundle: [/^@askrjs\/askr(?:\/.*)?$/] },
   },
   build: {
     minify: false,

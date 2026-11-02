@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+## 0.5.1 - 2026-11-01
+
+### Changed
+
+- Refresh the generated icon set from Lucide 1.34.0 to 1.66.0: add 257 icon
+  exports and update 100 SVG definitions without removing existing icon names.
+
+### Development
+
+- Upgrade the build and test toolchain to Vite+ 1.4 / Vitest 5 and refresh
+  development dependencies.
+
 ## 0.5.0 - 2026-10-12
 
 ### Breaking changes
