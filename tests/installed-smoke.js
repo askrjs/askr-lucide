@@ -76,6 +76,9 @@ for (const { name, path } of icons) {
   const html = renderToStringSync(() => lucide[name]({ title: name }));
   assert.ok(html.includes("<svg") && html.includes("<title>" + name + "</title>"), name + " must render its title through SSR");
 }
+const searchHtml = renderToStringSync(() => lucide.SearchIcon({ title: "Search" }));
+assert.ok(searchHtml.includes('<path d="m21 21-4.34-4.34"'));
+assert.ok(searchHtml.includes('<circle cx="11" cy="11" r="8"'));
 for (const path of ["create-icon", "types", "dist/create-icon.js", "dist/types.d.ts"]) {
   await assert.rejects(import("@askrjs/lucide/" + path), { code: "ERR_PACKAGE_PATH_NOT_EXPORTED" });
 }
