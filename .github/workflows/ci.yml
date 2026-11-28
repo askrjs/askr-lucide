@@ -6,9 +6,9 @@ on:
   schedule:
     - cron: "15 3 * * *"
   push:
-    branches: [develop, main]
+    branches: [main]
   pull_request:
-    branches: [develop, main]
+    branches: [main]
 
 permissions:
   contents: read
@@ -48,8 +48,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test
-        run: npm test
+      - name: Test with coverage
+        run: npm run test:coverage
 
       - name: Type checks
         run: |
