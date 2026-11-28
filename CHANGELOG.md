@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 0.5.2 - 2026-11-28
+
+### Tests
+
+- Verify the geometry of the installed Search icon.
+
 ## 0.5.1 - 2026-11-01
 
 ### Changed
